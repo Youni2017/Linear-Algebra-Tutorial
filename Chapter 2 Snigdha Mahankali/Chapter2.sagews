@@ -1,94 +1,6 @@
-︠af8377d2-8400-41b2-9fae-6a8a59107cc2i︠
+︠af8377d2-8400-41b2-9fae-6a8a59107cc2si︠
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
-%html
-<p style="text-align: left;"><span style="font-size: medium;"><br>Function Reference Sheet:</span></p>
-︡c16c5ac3-2f98-4048-95ae-a17083d30911︡{"html":"<p style=\"text-align: left;\"><span style=\"font-size: medium;\"><br>Function Reference Sheet:</span></p>"}︡{"done":true}
-︠d6feb77d-9b83-4b62-aaec-510490f0cd48︠
-#functions reference sheet
-x, y, z, a, c, d, e = var("x y z a c d e")
-xVect = vector([x, y, z, a, c, d, e])
-
-# Takes in a transposed matrix (matrix[[col][col]].transpose()) and a vector b
-# Throws an exception if b's elements is not equal to A's rows
-# returns a list of equations
-def toEquations (A, b):
-    if (len(A.rows()) != len(b)):
-        raise Exception("A and b don't have the correct number of elements")
-    print(A, "x = ", b)
-    print()
-
-    numOfrows = len(A.rows());
-    numOfcols = len(A.columns());
-    equations = []
-    for i in range(numOfrows):
-        equation = ""
-        for j in range(numOfcols):
-            equation = equation + " + " + str(A[i][j] * xVect[j])
-
-        equation = equation[2:] + " == " + str(b[i])
-        equations.append(equation)
-    return equations
-
-# Takes in a transposed matrix m and a vector and prints out whether the matrix is in span or not
-# if the matrix is in span, the function will print out the linear combination of m's vectors that results in the vector
-def checkVectorinSpan (m, vector):
-    try:
-        x = m.solve_right(vector);
-        print(vector, ": vector in the span!")
-        printing = str(x[0]) + " * " + str(m.transpose()[0]) + " + "
-        for i in range(1, len(m.columns())):
-            printing = printing + str(x[i]) + " * " + str(m.transpose()[i]) + "  "
-
-        print(printing, "= ", vector)
-        print()
-
-    except:
-        print(vector, ": vector is not in span!")
-
-#Takes in a transposed matrix and returns the column and row span as a dictionary {colspan: ..., rowspan: ...}
-def colAndRowSpan (m) :
-    vectors = m.echelon_form().rank()
-    result = {}
-    colspan = []
-    rowspan = []
-    for i in range(vectors):
-        colspan.append(m.transpose()[i])
-        rowspan.append(m[i])
-
-    result["colspan"] = colspan
-    result["rowspan"] = rowspan
-    return result
-
-#Takes in a transposed matrix and prints whether the set of vectors spans the space it lives in
-# returns true if the set spans the space and false otherwise
-def spanRn (m) :
-    cols = len(m.columns());
-    rows = len(m.rows());
-    print("the set lives in R", rows)
-
-    if(rank(m) == rows) :
-        print("The set spans R", rows)
-        return True
-    else:
-        print("The set doesn't span R", rows)
-        return False
-
-#Takes in a transposed matrix and returns True if the set is linearly independent and false if linearly dependent
-def isIndependent(m) :
-    solved = m.echelon_form();
-    print(solved,"\n")
-    cols = len(m.columns())
-
-    for i in range(cols):
-        if solved[i][i] == 0:
-            print(str(m.transpose()[i]), " is in the span of another vector in the set! \nThe set is Linearly Dependent\n")
-            return False;
-    print("The set is Linearly Independent!\n")
-    return True;
-
-
-
 ︡8484fb1f-b20c-4c28-94c9-e7caea06954e︡{"done":true}
 ︠2bb905b9-acfd-4f08-b9fe-173f82e225a8i︠
 %html
@@ -551,7 +463,95 @@ graph.show()
 %html
 <p style="text-align: left;"><span style="font-size: xx-large;"><span style="font-size: large;">Unifying Theorum Part 1 (If you know one is true, you automatically know the others are true):<br>~ A set of n vectors spans Rn<br>~ A set of n vectors is lineraly independent<br>~ Ax = b (written as a series of equations or as an augmented matrix) has one unique solution for every b</span></span></p>
 ︡7a03d2ed-14e1-449b-b607-34f25d318829︡{"done":true,"html":"<p style=\"text-align: left;\"><span style=\"font-size: xx-large;\"><span style=\"font-size: large;\">Unifying Theorum Part 1 (If you know one is true, you automatically know the others are true):<br>~ A set of n vectors spans Rn<br>~ A set of n vectors is lineraly independent<br>~ Ax = b (written as a series of equations or as an augmented matrix) has one unique solution for every b</span></span></p>"}
-︠213cfefa-9fa5-4cff-afb6-d46525af321di︠
+︠1887ab74-b8b9-4c7b-821f-264e1985b0eci︠
+%html
+<p style="text-align: left;"><span style="font-size: medium;"><br>Function Reference Sheet:</span></p>
+︡cbf6bad8-4ed1-4a2b-ac0e-5e224ed3b2a0︡{"done":true,"html":"<p style=\"text-align: left;\"><span style=\"font-size: medium;\"><br>Function Reference Sheet:</span></p>"}
+︠b359b67c-cb2d-43fe-bf3c-ebae69f69c9eo︠
+#functions reference sheet
+x, y, z, a, c, d, e = var("x y z a c d e")
+xVect = vector([x, y, z, a, c, d, e])
+
+# Takes in a transposed matrix (matrix[[col][col]].transpose()) and a vector b
+# Throws an exception if b's elements is not equal to A's rows
+# returns a list of equations
+def toEquations (A, b):
+    if (len(A.rows()) != len(b)):
+        raise Exception("A and b don't have the correct number of elements")
+    print(A, "x = ", b)
+    print()
+
+    numOfrows = len(A.rows());
+    numOfcols = len(A.columns());
+    equations = []
+    for i in range(numOfrows):
+        equation = ""
+        for j in range(numOfcols):
+            equation = equation + " + " + str(A[i][j] * xVect[j])
+
+        equation = equation[2:] + " == " + str(b[i])
+        equations.append(equation)
+    return equations
+
+# Takes in a transposed matrix m and a vector and prints out whether the matrix is in span or not
+# if the matrix is in span, the function will print out the linear combination of m's vectors that results in the vector
+def checkVectorinSpan (m, vector):
+    try:
+        x = m.solve_right(vector);
+        print(vector, ": vector in the span!")
+        printing = str(x[0]) + " * " + str(m.transpose()[0]) + " + "
+        for i in range(1, len(m.columns())):
+            printing = printing + str(x[i]) + " * " + str(m.transpose()[i]) + "  "
+
+        print(printing, "= ", vector)
+        print()
+
+    except:
+        print(vector, ": vector is not in span!")
+
+#Takes in a transposed matrix and returns the column and row span as a dictionary {colspan: ..., rowspan: ...}
+def colAndRowSpan (m) :
+    vectors = m.echelon_form().rank()
+    result = {}
+    colspan = []
+    rowspan = []
+    for i in range(vectors):
+        colspan.append(m.transpose()[i])
+        rowspan.append(m[i])
+
+    result["colspan"] = colspan
+    result["rowspan"] = rowspan
+    return result
+
+#Takes in a transposed matrix and prints whether the set of vectors spans the space it lives in
+# returns true if the set spans the space and false otherwise
+def spanRn (m) :
+    cols = len(m.columns());
+    rows = len(m.rows());
+    print("the set lives in R", rows)
+
+    if(rank(m) == rows) :
+        print("The set spans R", rows)
+        return True
+    else:
+        print("The set doesn't span R", rows)
+        return False
+
+#Takes in a transposed matrix and returns True if the set is linearly independent and false if linearly dependent
+def isIndependent(m) :
+    solved = m.echelon_form();
+    print(solved,"\n")
+    cols = len(m.columns())
+
+    for i in range(cols):
+        if solved[i][i] == 0:
+            print(str(m.transpose()[i]), " is in the span of another vector in the set! \nThe set is Linearly Dependent\n")
+            return False;
+    print("The set is Linearly Independent!\n")
+    return True;
+
+︡79fceb7e-ac99-4697-aa41-583c76d1a8d8︡
+︠c0f47c1a-12e7-402d-b207-baecc365fe73i︠
 %html
 <p style="text-align: center;"><span style="font-size: medium;">References Used:</span></p>
 <p style="text-align: center;"><span style="font-size: medium;"><a href='https://doc.sagemath.org/html/en/tutorial/tour_linalg.html'>Sage Linear Algebra Docs</a></span></p>
@@ -560,8 +560,7 @@ graph.show()
 <p style="text-align: center;"><span style="font-size: medium;"><a href='https://doc.sagemath.org/html/en/reference/plotting/sage/plot/arrow.html'>Plotting 2D Vectors</a></span></p>
 <p style="text-align: center;"><span style="font-size: medium;"><a href='https://doc.sagemath.org/html/en/reference/plot3d/sage/plot/plot3d/plot3d.html#sage.plot.plot3d.plot3d.plot3d'>Plotting 3D functions</a></span></p>
 
-
-︡266d45d9-37eb-4023-b2c3-d6abdb3c4059︡{"done":true,"html":"<p style=\"text-align: center;\"><span style=\"font-size: medium;\">References Used:</span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/tutorial/tour_linalg.html'>Sage Linear Algebra Docs</a></span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/reference/modules/sage/modules/vector_integer_dense.html'>Basic Vector Operations</a></span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/tutorial/tour_algebra.html'>Solving Equations</a></span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/reference/plotting/sage/plot/arrow.html'>Plotting 2D Vectors</a></span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/reference/plot3d/sage/plot/plot3d/plot3d.html#sage.plot.plot3d.plot3d.plot3d'>Plotting 3D functions</a></span></p>"}
+︡a1b4df18-2dec-41f8-a9b4-4055191cce30︡{"done":true,"html":"<p style=\"text-align: center;\"><span style=\"font-size: medium;\">References Used:</span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/tutorial/tour_linalg.html'>Sage Linear Algebra Docs</a></span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/reference/modules/sage/modules/vector_integer_dense.html'>Basic Vector Operations</a></span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/tutorial/tour_algebra.html'>Solving Equations</a></span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/reference/plotting/sage/plot/arrow.html'>Plotting 2D Vectors</a></span></p>\n<p style=\"text-align: center;\"><span style=\"font-size: medium;\"><a href='https://doc.sagemath.org/html/en/reference/plot3d/sage/plot/plot3d/plot3d.html#sage.plot.plot3d.plot3d.plot3d'>Plotting 3D functions</a></span></p>"}
 ︠92715fc8-8884-4699-9599-033efb499810︠
 
 
